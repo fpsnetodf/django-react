@@ -1,4 +1,4 @@
-#!/data/data/com.termux/files/home/django-react/back-end/venv/bin/python3
+#!/home/neto/django-react/back-end/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
