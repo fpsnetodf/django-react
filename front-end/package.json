@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "rm -rf ../back-end/build && mkdir -p ../back-end/build/static/ && npx vite build && cp -rf dist/ ../back-end/build/static/ && rm -rf dist/",
+    "build": "rm -rf ../back-end/static && mkdir -p ../back-end/static/ && npx vite build && cp -rf dist/ ../back-end/static/ && rm -rf dist/",
     "lint": "eslint .",
     "preview": "vite preview"
   },
