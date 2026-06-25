@@ -1,26 +1,33 @@
-import { useState } from 'react'
-
-
+import { useEffect, useState } from 'react';
 
 function App() {
-  const [count, setCount] = useState(0)
+  // Estado para guardar os dados que vêm do Django
+  const [dados, setDados] = useState(null);
+
+  useEffect(() => {
+    // Faz a requisição para o endpoint do Django
+    fetch('http://localhost:8000/api/')
+      .then(response => response.json())
+      .then(data => setDados(data))
+      .catch(error => console.error("Erro ao buscar dados:", error));
+  }, []);
+
+  if (!dados) return <p>Carregando dados do servidor...</p>;
 
   return (
-    <div className='border-spacing-1 border w-6/12 rounded-lg mx-auto my-32 h-56 bg-slate-100'>      
-      <h1 className='text-center text-green-500 text-4xl my-5'>Vite + React</h1>
-      <div className="flex justify-center">
-        <button className='hover:bg-sky-400 px-4 py-2 rounded-lg me-4 bg-sky-300 hover:text-white' onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="text-purple-500 font-bold text-xl text-center">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+      <h1 className="font-bold text-center text-fuchsia-500 text-6xl">Bem-vindo, {dados.usuario}!</h1>
+      <p className="text-xl text-blue-500 ">Status: {dados.status}</p>
+      <p className="text-xl text-green-500">Você tem {dados.notificacoes} novas notificações.</p>
+      
+      <h3 className="text-xl font-bold mt-6 text-gray-500">Seus Itens:</h3>
+      <ul className="list-disc list-inside">
+        {dados.itens.map((item, index) => (
+          <li className="text-lg text-cyan-700 " key={index}>{item}</li>
+        ))}
+      </ul>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
